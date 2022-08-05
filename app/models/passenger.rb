@@ -1,5 +1,5 @@
 class Passenger < ApplicationRecord
   has_many :flights
-  has_many :passenger_flights
-  has_many :passenger, through: :passenger_flights
+  has_many :flight_passengers
+  has_many :flights, through: :flight_passengers
 end
