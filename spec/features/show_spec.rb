@@ -1,11 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Airline, type: :model do
-  it { should have_many :flights }
-  it { should have_many(:flight_passengers).through(:flights) }
-  it { should have_many(:passengers).through(:flight_passengers) }
+RSpec.describe 'airline show page' do
 
-  before :each do
+  before:each do
+
     @airline_1 = Airline.create!(name: 'American')
     @airline_2 = Airline.create!(name: 'Delta')
     @airline_3 = Airline.create!(name: 'JetBlue')
@@ -29,7 +27,10 @@ RSpec.describe Airline, type: :model do
     @flight_passenger_4 = FlightPassenger.create!(flight_id: @flight_4.id, passenger_id: @passenger_4.id)
   end
 
-  it 'should return a list of the passengers that are over the age of 18' do
-    expect(@airline_1.passengers_over_18(@passenger_1.id)).to eq([@passenger_1])
+  it 'shows a list of the passengers that have flights on the particular airline that over age 18' do
+    visit "/airline/#{@airline_1.id}"
+
+    expect(page).to have_content(@passenger_1.name)
+    expect(page).to_not have_content(@passenger_2.name)
   end
 end
