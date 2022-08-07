@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Airline, type: :model do
   it { should have_many :flights }
-  it { should have_many(:flight_passengers).through(:flights) }
-  it { should have_many(:passengers).through(:flight_passengers) }
+  # it { should have_many(:flight_passengers).through(:flights) }
+  # it { should have_many(:passengers).through(:flight_passengers) }
 
   before :each do
     @airline_1 = Airline.create!(name: 'American')
@@ -17,7 +17,7 @@ RSpec.describe Airline, type: :model do
     @flight_4 = @airline_3.flights.create!(number: 6798, date: "10/9/2022", departure_city: "Tulsa", arrival_city: "Fresno")
     @flight_5 = @airline_4.flights.create!(number: 9665, date: "11/22/2022", departure_city: "Durham", arrival_city: "New Orleans")
 
-    @passenger_1 = Passenger.create!(name: "Brennan Lee Mulligan", age: 13)
+    @passenger_1 = Passenger.create!(name: "Brennan Lee Mulligan", age: 23)
     @passenger_2 = Passenger.create!(name: "Aabria Iyengar", age: 9)
     @passenger_3 = Passenger.create!(name: "Bill Seacaster", age: 46)
     @passenger_4 = Passenger.create!(name: "Misty Moore", age: 44)
@@ -30,6 +30,6 @@ RSpec.describe Airline, type: :model do
   end
 
   it 'should return a list of the passengers that are over the age of 18' do
-    expect(@airline_1.passengers_over_18(@passenger_1.id)).to eq([@passenger_1])
+    expect(@airline_1.passengers_over_18).to eq([@passenger_1.name])
   end
 end
